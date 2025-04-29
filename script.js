@@ -1,31 +1,56 @@
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const sendButton = document.getElementById('sendButton');
+document.addEventListener('DOMContentLoaded', () => {
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendButton');
 
-function addMessage(content, sender) {
-    const message = document.createElement('div');
-    message.classList.add('message', sender);
-    message.textContent = content;
-    chatMessages.appendChild(message);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-sendButton.addEventListener('click', () => {
-    const userMessage = chatInput.value.trim();
-    if (userMessage) {
-        addMessage(userMessage, 'user');
-        chatInput.value = '';
-
-        // Placeholder for bot response
-        setTimeout(() => {
-            addMessage('This is a placeholder response from the bot.', 'bot');
-        }, 500);
+    function addMessage(content, sender) {
+        const message = document.createElement('div');
+        message.classList.add('message', sender);
+        message.textContent = content;
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-});
 
-chatInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        sendButton.click();
+    async function getBotResponse(userMessage) {
+        try {
+            const response = await fetch('http://localhost:4000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.reply;
+        } catch (error) {
+            console.error('Error fetching bot response:', error);
+            return 'Sorry, I am having trouble responding right now.';
+        }
     }
+
+    sendButton.addEventListener('click', async () => {
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            addMessage(userMessage, 'user');
+            chatInput.value = '';
+            console.log('User message:', userMessage);
+
+            // Fetch bot response from OpenAI API
+            const botResponse = await getBotResponse(userMessage);
+            console.log('Bot response:', botResponse);
+            addMessage(botResponse, 'bot');
+        }
+    });
+
+    chatInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendButton.click();
+        }
+    });
 });

@@ -1,0 +1,16 @@
+{
+  "name": "ai-chat-hw",
+  "version": "1.0.0",
+  "description": "Chatbot project integrating OpenAI API",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "start": "node script.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}
