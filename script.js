@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chatInput');
     const sendButton = document.getElementById('sendButton');
 
+    if (!chatMessages || !chatInput || !sendButton) {
+        console.error('One or more required elements are missing from the DOM.');
+        return;
+    }
+
     function addMessage(content, sender) {
         const message = document.createElement('div');
         message.classList.add('message', sender);
@@ -38,11 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userMessage) {
             addMessage(userMessage, 'user');
             chatInput.value = '';
-            console.log('User message:', userMessage);
 
-            // Fetch bot response from OpenAI API
             const botResponse = await getBotResponse(userMessage);
-            console.log('Bot response:', botResponse);
             addMessage(botResponse, 'bot');
         }
     });
