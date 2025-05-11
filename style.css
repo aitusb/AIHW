@@ -1,7 +1,7 @@
 /* General Reset */
 body, html {
   font-family: 'Poppins', sans-serif; /* Clean, readable typography */
-  background: #f6f2ea; /* Match creamy neutral background */
+  background: #f6f2ea; /* Set background to the provided color */
   height: 100vh;
   display: flex;
   flex-direction: row;
@@ -16,7 +16,7 @@ body, html {
   width: 100%;
   height: 100%;
   backdrop-filter: blur(5px);
-  background: rgba(0, 0, 0, 0.5);
+  background: none; /* Removed black background */
   z-index: 1;
 }
 
@@ -36,7 +36,7 @@ body, html {
   height: 80%;
   background: #fffdf8;
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lighter shadow */
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -138,9 +138,8 @@ body, html {
   height: 70%;
   top: 50%;
   transform: translateY(-50%);
-  background: #272B5A; /* Updated background color for the side boxes */
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow */
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -153,73 +152,46 @@ body, html {
 }
 
 .right-container {
-  width: 50%; /* Right container occupies 50% */
-  height: 100%; /* Full height */
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: #f6f2ea; /* Creamy neutral */
-  z-index: 2; /* Ensure it is above the blurred background */
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-}
-
-.shopping-list-container {
+  right: 10%;
+  position: fixed;
+  width: 20%;
+  height: 70%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  z-index: 2;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-  gap: 15px;
-  width: 80%; /* Smaller width for the shopping list */
-  height: 80%; /* Reduced height for centering */
-  background: #fffdf8; /* Light paper tint */
+}
+
+.right-container .card {
+  width: 80%;
+  height: 80%;
+  background: #fffdf8; /* White card */
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
-.shopping-list-container h2, .shopping-list-container h3 {
-  color: #3d405b; /* Header text color */
-  text-align: center;
-}
-
-.shopping-list-container input {
-  width: 90%;
-  max-width: 400px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.shopping-list-container button {
-  width: 90%;
-  max-width: 400px;
-  padding: 10px;
-  background: #81b29a; /* Sage green */
-  color: #ffffff; /* White text */
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.shopping-list-container button:hover {
-  background: #6d9d89; /* Hover sage green */
-}
-
-.shopping-list-container ul {
-  width: 100%;
-  max-width: 400px;
+.ingredient-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.shopping-list-item {
+.ingredient-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -229,12 +201,16 @@ body, html {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.delete-button {
+.ingredient-list li .delete-button {
   background: none;
   border: none;
   color: #ff6b6b;
   cursor: pointer;
   font-size: 1.2rem;
+}
+
+.add-success {
+  animation: successFade 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -259,9 +235,20 @@ body, html {
 
 @keyframes pulse {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 10px #007bff; /* Solid blue shadow */
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+    box-shadow: 0 0 20px #007bff; /* Solid blue shadow */
+  }
+}
+
+@keyframes successFade {
+  0% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
   }
 }

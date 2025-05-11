@@ -55,4 +55,35 @@ document.addEventListener('DOMContentLoaded', () => {
             sendButton.click();
         }
     });
+
+    document.getElementById('addIngredientButton').addEventListener('click', () => {
+        const input = document.getElementById('ingredientInput');
+        const ingredient = input.value.trim();
+
+        if (ingredient) {
+            const list = document.getElementById('ingredientList');
+
+            // Create list item
+            const listItem = document.createElement('li');
+            listItem.textContent = ingredient;
+
+            // Create delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '✕';
+            deleteButton.className = 'delete-button';
+            deleteButton.addEventListener('click', () => {
+                listItem.remove();
+            });
+
+            listItem.appendChild(deleteButton);
+            list.appendChild(listItem);
+
+            // Add success animation
+            listItem.classList.add('add-success');
+            setTimeout(() => listItem.classList.remove('add-success'), 500);
+
+            // Clear input field
+            input.value = '';
+        }
+    });
 });
